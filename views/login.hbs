@@ -1,0 +1,29 @@
+{{> header }}   
+<!DOCTYPE html>
+<html lang="en">
+    <title>Login</title>
+<body>
+    {{!-- Navigation links --}}
+ 
+
+    {{!-- Body --}}
+    <div class="container mt-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">Login Form</div>
+            <div class="card-body">
+                <form action="/auth/login" method="POST">
+                    <div class="mb-3">
+                        <label for="email-lgn" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email-lgn" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-lgn" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password-lgn" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

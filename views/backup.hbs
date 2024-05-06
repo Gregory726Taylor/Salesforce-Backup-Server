@@ -1,0 +1,79 @@
+{{> header }}   
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <title>Backups</title>
+    <style>
+        /* Optional: Add some styles to hide tables initially */
+        .backup-table {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function toggleTable(objectName) {
+            // Hide all backup tables
+            var tables = document.querySelectorAll('.backup-table');
+            tables.forEach(table => table.style.display = 'none');
+            
+            // Show the selected object's table
+            var selectedTable = document.getElementById('table-' + objectName);
+            if (selectedTable) {
+                selectedTable.style.display = 'table';
+            }
+        }
+    </script>
+<body>
+    <div class="container">
+        <h1>Backed-Up Files</h1>
+        <form method="get" action="/backup">
+            <div class="form-group">
+                <label for="objectName">Object Name:</label>
+                <input type="text" name="objectName" id="objectName" class="form-control" placeholder="Search by object name">
+            </div>
+            <div class="form-group">
+                <label for="fromDate">From Date:</label>
+                <input type="date" name="fromDate" id="fromDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="toDate">To Date:</label>
+                <input type="date" name="toDate" id="toDate" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        {{#if groupedBackups}}
+            <div class="mt-3">
+                <select class="form-select" onchange="toggleTable(this.value)">
+                    <option value="">Select Object</option>
+                    {{#each groupedBackups}}
+                        <option value="{{@key}}">{{@key}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            {{#each groupedBackups}}
+                <table class="backup-table" id="table-{{@key}}">
+                    <thead>
+                        <tr>
+                            <th>Backup Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each this}}
+                            <tr>
+                                <td>{{this.BackupDate}}</td>
+                                <td><a href="{{this.FilePath}}" class="btn btn-success" download>Download</a></td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{/each}}
+        {{else}}
+            <div>No backups found.</div>
+        {{/if}}
+    </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{{> header }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Cron Jobs</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>Manage Cron Jobs</h1>
+        <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addCronModal">
+            Add New Cron Job
+        </button>
+
+        <!-- Table for showing existing cron jobs -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cron Expression</th>
+                    <th>Objects</th>
+                    <th>last run</th>
+                    <th>Next run</th>
+                </tr>
+            </thead>
+            <tbody id="cronJobsTableBody">
+                <!-- Cron jobs will be dynamically populated here -->
+            </tbody>
+        </table>
+
+        <!-- Add Cron Modal -->
+        <div class="modal fade" id="addCronModal" tabindex="-1" aria-labelledby="addCronModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCronModalLabel">New Cron Job</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addCronForm">
+                            <div class="mb-3">
+                                <label for="newObjectNames" class="form-label">Salesforce Objects</label>
+                                <input type="text" id="searchObjects" class="form-control"
+                                    placeholder="Search objects...">
+                                <select class="form-select" id="newObjectNames" multiple required>
+                                    {{#each objects}}
+                                    <option value="{{this.ObjectName}}">{{this.Label}}</option>
+                                    {{/each}}
+                                </select>
+                                <small>Selected objects: <span id="selectedObjects">None</span></small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newCronExpression" class="form-label">Cron Expression</label>
+                                <input type="text" class="form-control" id="newCronExpression" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Cron Job</button>
+                                <button type="button" class="btn btn-danger" id="clearForm">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Cron Modal -->
+        <div class="modal fade" id="editCronModal" tabindex="-1" aria-labelledby="editCronModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCronModalLabel">Edit Cron Job</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCronForm">
+                            <input type="hidden" id="editCronId">
+                            <div class="mb-3">
+                                <label for="editObjectNames" class="form-label">Salesforce Objects</label>
+                                <input type="text" class="form-control" id="editObjectNames" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editCronExpression" class="form-label">Cron Expression</label>
+                                <input type="text" class="form-control" id="editCronExpression" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Update Cron Job</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/schedulerScript.js"></script>
+</body>
+
+</html>

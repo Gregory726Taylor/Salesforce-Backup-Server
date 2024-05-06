@@ -1,0 +1,47 @@
+{{> header }}   
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Data Backup Server</title>
+
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="header mb-4">
+            <h1 class="text-center">Data Backup Server</h1>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Action</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#if user}}
+                <tr>
+                    <td><a href="/start-export" class="btn btn-primary btn-block">Start Export</a></td>
+                    <td>Start the data export process</td>
+                </tr>
+                <tr>
+                    <td><a href="/backup" class="btn btn-primary btn-block">Backups</a></td>
+                    <td>View backup files</td>
+                </tr>
+                {{#if user.isAdmin}}
+                <tr>
+                    <td><a href="/register" class="btn btn-primary btn-block">User Creation</a></td>
+                    <td>Create a new user account</td>
+                </tr>
+                {{/if}}
+                {{else}}
+                <tr>
+                    <td><a href="/login" class="btn btn-primary btn-block">Login</a></td>
+                    <td>Log in to the application</td>
+                </tr>
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
